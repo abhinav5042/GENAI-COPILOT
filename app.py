@@ -21,8 +21,12 @@ def prd_agent(idea):
     return gpt.invoke([SystemMessage(content="You are a senior PM. Write a full PRD with sections: Overview, Problem Statement, Proposed Solution, Target Users, Functional Requirements, Non-Functional Requirements, Success Metrics, Out of Scope. Use bullet points."), HumanMessage(content=f"Product: {idea}")]).content
 
 def market_agent(idea):
-    _,gemini,_ = init_llms()
-    return gemini.invoke([SystemMessage(content="You are a market analyst. Provide: Market Sizing (TAM/SAM/SOM with assumptions), Competitive Landscape (3-5 real competitors with strengths/weaknesses), Key Market Trends (3-4 trends), Go-to-Market Recommendation (1-2 paragraphs with real numbers)."), HumanMessage(content=f"Product: {idea}")]).content
+    _, gemini, groq_llm = init_llms()
+    system = "You are a market analyst. Provide: Market Sizing (TAM/SAM/SOM with assumptions), Competitive Landscape (3-5 real competitors with strengths/weaknesses), Key Market Trends (3-4 trends), Go-to-Market Recommendation (1-2 paragraphs with real numbers)."
+    try:
+        return gemini.invoke([SystemMessage(content=system), HumanMessage(content=f"Product: {idea}")]).content
+    except Exception:
+        return groq_llm.invoke([SystemMessage(content=system), HumanMessage(content=f"Product: {idea}")]).content
 
 def stories_agent(idea, prd=""):
     _,_,groq_llm = init_llms()
