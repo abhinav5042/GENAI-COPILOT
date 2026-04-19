@@ -114,9 +114,9 @@ def load_api_keys():
         os.environ["GOOGLE_API_KEY"] = userdata.get("GOOGLE_API_KEY")
         print("✅ Keys loaded from Colab Secrets")
     else:
-        os.environ.setdefault("OPENAI_API_KEY", "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")
-        os.environ.setdefault("GROQ_API_KEY",   "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")
-        os.environ.setdefault("GOOGLE_API_KEY", "AIzaSyBbD6cut7EjmnD6Lije4V-pkSkxdnVF6X8")
+        os.environ.setdefault("OPENAI_API_KEY", "")
+        os.environ.setdefault("GROQ_API_KEY", "")
+        os.environ.setdefault("GOOGLE_API_KEY", "")
         print("✅ Keys loaded from environment")
 
     missing = [k for k in ["OPENAI_API_KEY","GROQ_API_KEY","GOOGLE_API_KEY"]
